@@ -1,0 +1,21 @@
+input:focus {
+    box-shadow: none !important;
+    border-color: #dee2e6 !important;
+}
+
+.btn-primary {
+    background-color: #676df0;
+}
+
+.btn-primary:hover {
+    background-color: #545be9;
+}
+
+.btn-outline-primary {
+    border-color: #676df0;
+    color: #676df0;
+}
+
+.btn-outline-primary:hover {
+    background-color: #676df0;
+}
