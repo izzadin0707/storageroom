@@ -19,3 +19,16 @@ input:focus {
 .btn-outline-primary:hover {
     background-color: #676df0;
 }
+
+/* DataTabel */
+.dataTables_wrapper .dataTables_paginate, 
+.dataTables_wrapper .dataTables_info, 
+.dataTables_wrapper .dataTables_length, 
+.dataTables_wrapper .dataTables_filter,
+table.dataTable {
+    font-size: 14px !important;
+}
+
+.dt-container .dt-info {
+    font-size: 12px !important;
+}
