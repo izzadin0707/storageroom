@@ -18,4 +18,18 @@
             })
         })
     })
+    
+    function generateSelect(element, url, placeholder = 'Select Option', required = false) {
+        $(element).html('');
+        $(element).append(`<option selected ${required ? 'disabled' : ''}>${placeholder}</option>`)
+        $.ajax({
+            'url' : url,
+            'type': 'POST',
+            'success': function (res) {
+                $.each(res.data, function (index, row) {
+                    $(element).append(`<option value="${row.value}">${row.text}</option>`)
+                })
+            }
+        })
+    }
 </script>
