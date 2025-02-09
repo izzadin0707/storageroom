@@ -7,7 +7,9 @@ use CodeIgniter\Model;
 class Users extends Model
 {
     protected $db;
-    protected $table = "users as a";
+    protected $table = "users";
+    protected $primaryKey = 'id';
+    protected $allowedFields = ['username', 'password', 'roleid'];
 
     public function __construct() {
         $this->db = db_connect();
@@ -15,11 +17,14 @@ class Users extends Model
     }
 
     public function get() {
-        return $this->builder->get()->getResultArray();
+        return $this->builder->select('users.*, r.rolename')
+        ->join('role as r', 'r.id = users.roleid', 'left')
+        ->get()->getResultArray();
     }
 
     public function getOne($filter = []) {
-        $x = $this->builder;
+        $x = $this->builder->select('users.*, r.rolename')
+        ->join('role as r', 'r.id = users.roleid', 'left');
         
         if (isset($filter['id'])) {
             return $x->where('id', $filter['id'])->get()->getRowArray();
@@ -30,5 +35,18 @@ class Users extends Model
         }
 
         return $x->get()->getRowArray();
+    }
+
+    public function store($data) {
+        return $this->builder->insert($data);
+    }
+
+    public function edit($id, $data) {
+        $res = $data;
+        return $this->builder->where('id', $id)->update($res);
+    }
+
+    public function remove($id) {
+        return $this->builder->delete(['id' => $id]);
     }
 }
