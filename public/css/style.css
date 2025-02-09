@@ -1,6 +1,11 @@
 input:focus {
     box-shadow: none !important;
-    border-color: #dee2e6 !important;
+    border-color: #676df0 !important;
+}
+
+select:focus {
+    box-shadow: none !important;
+    border-color: #676df0 !important;
 }
 
 .btn-primary {
@@ -31,4 +36,20 @@ table.dataTable {
 
 .dt-container .dt-info {
     font-size: 12px !important;
+}
+
+.btn-action {
+    aspect-ratio: 1/1;
+    width: 30px; 
+    font-size: 1.2rem;
+    padding: 0 !important;
+}
+
+.disabled>.page-link, .page-link.disabled {
+    background-color: white;
+}
+
+.active>.page-link, .page-link.active {
+    background-color: #676df0;
+    border-color: #676df0;
 }
