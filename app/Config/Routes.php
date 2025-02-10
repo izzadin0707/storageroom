@@ -25,3 +25,11 @@ $routes->group('role', ['filter' => 'auth'], function ($routes) {
     $routes->post('table', 'Settings\RoleController::datatable');
     $routes->post('select', 'Settings\RoleController::select');
 });
+
+$routes->group('category', ['filter' => 'auth'], function ($routes) {
+    $routes->get('/', 'Settings\CategoryController::index');
+    $routes->post('save', 'Settings\CategoryController::save');
+    $routes->post('delete', 'Settings\CategoryController::delete');
+    $routes->post('table', 'Settings\CategoryController::datatable');
+    $routes->post('select', 'Settings\CategoryController::select');
+});
