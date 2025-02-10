@@ -21,6 +21,8 @@ class Home extends BaseController
 	    {
 	        return view('login/v_login');
 	    }
+        helper('cookie');
+        if (!isset($_COOKIE['sidebar-status'])) setcookie('sidebar-status', 'open');
         return view('welcome_message');
     }
 }
