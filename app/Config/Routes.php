@@ -26,6 +26,14 @@ $routes->group('role', ['filter' => 'auth'], function ($routes) {
     $routes->post('select', 'Settings\RoleController::select');
 });
 
+$routes->group('category', ['filter' => 'auth'], function ($routes) {
+    $routes->get('/', 'Settings\CategoryController::index');
+    $routes->post('save', 'Settings\CategoryController::save');
+    $routes->post('delete', 'Settings\CategoryController::delete');
+    $routes->post('table', 'Settings\CategoryController::datatable');
+    $routes->post('select', 'Settings\CategoryController::select');
+});
+
 $routes->group('location', ['filter' => 'auth'], function ($routes) {
     $routes->get('/', 'Main\LocationController::index');
     $routes->post('save', 'Main\LocationController::save');
