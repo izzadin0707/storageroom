@@ -25,3 +25,11 @@ $routes->group('role', ['filter' => 'auth'], function ($routes) {
     $routes->post('table', 'Settings\RoleController::datatable');
     $routes->post('select', 'Settings\RoleController::select');
 });
+
+$routes->group('location', ['filter' => 'auth'], function ($routes) {
+    $routes->get('/', 'Main\LocationController::index');
+    $routes->post('save', 'Main\LocationController::save');
+    $routes->post('delete', 'Main\LocationController::delete');
+    $routes->post('table', 'Main\LocationController::datatable');
+    $routes->post('select', 'Main\LocationController::select');
+});
