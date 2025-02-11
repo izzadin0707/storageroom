@@ -4,12 +4,12 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Category extends Model
+class Type extends Model
 {
     protected $db;
-    protected $table = "category as a";
+    protected $table = "type";
     protected $primaryKey = 'id';
-    protected $allowedFields = ['nama', 'nama_type'];
+    protected $allowedFields = ['nama'];
 
     public function __construct() {
         $this->db = db_connect();
@@ -17,9 +17,7 @@ class Category extends Model
     }
 
     public function get() {
-        return $this->builder->select('a.*, b.nama as nama_type')
-            ->join('type as b', 'b.id = a.id_type')
-            ->get()->getResultArray();
+        return $this->builder->get()->getResultArray();
     }
 
     public function getOne($filter = []) {

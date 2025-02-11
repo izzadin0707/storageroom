@@ -10,8 +10,8 @@
         <div class="row">
             <div class="col-12">
                 <div class="mb-2">
-                    <label for="nama" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">Category Name</label>
-                    <input type="text" class="form-control" style="font-size: .9rem;" id="nama" name="nama" placeholder="Category Name">
+                    <label for="nama" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">Type Name</label>
+                    <input type="text" class="form-control" style="font-size: .9rem;" id="nama" name="nama" placeholder="@ex: Administrator">
                 </div>
             </div>
         </div>
@@ -32,8 +32,7 @@
         <thead>
             <tr>
                 <th class="text-center">No</th>
-                <th class="text-center">Category Name</th>
-                <th class="text-center">Type Name</th>
+                <th class="text-center">type Name</th>
                 <th class="text-center">Action</th>
             </tr>
         </thead>
@@ -46,7 +45,7 @@
     $(document).ready(function() {
         $('#example').DataTable({
             ajax: {
-                url: '<?= base_url('/category/table') ?>',
+                url: '<?= base_url('/type/table') ?>',
                 type: 'POST',
                 dataSrc: function(res) {
                     return res.data
@@ -59,9 +58,6 @@
                 },
                 {
                     data: 'nama'
-                },
-                {
-                    data: 'id_type'
                 },
                 {
                     data: 'action',
@@ -88,7 +84,7 @@
             $('input').prop('readonly')
 
             $.ajax({
-                'url': '<?= base_url('category/save') ?>',
+                'url': '<?= base_url('type/save') ?>',
                 'type': 'POST',
                 'data': $(this).serialize(),
                 'success': function(res) {
@@ -111,12 +107,11 @@
         $('#table-card').addClass('d-none')
         $('input[name="id"]').val(row.id)
         $('input[name="nama"]').val(row.nama)
-        $('input[name="nama_type"]').val(row.nama_type)
     }
 
     function deleted(e) {
         $.ajax({
-            'url': '<?= base_url('category/delete') ?>',
+            'url': '<?= base_url('type/delete') ?>',
             'type': 'POST',
             'data': {
                 'id': $(e).data('id')

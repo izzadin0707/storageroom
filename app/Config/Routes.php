@@ -34,6 +34,14 @@ $routes->group('category', ['filter' => 'auth'], function ($routes) {
     $routes->post('select', 'Settings\CategoryController::select');
 });
 
+$routes->group('type', ['filter' => 'auth'], function ($routes) {
+    $routes->get('/', 'Settings\TypeController::index');
+    $routes->post('save', 'Settings\TypeController::save');
+    $routes->post('delete', 'Settings\TypeController::delete');
+    $routes->post('table', 'Settings\TypeController::datatable');
+    $routes->post('select', 'Settings\TypeController::select');
+});
+
 $routes->group('location', ['filter' => 'auth'], function ($routes) {
     $routes->get('/', 'Main\LocationController::index');
     $routes->post('save', 'Main\LocationController::save');

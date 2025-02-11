@@ -3,22 +3,22 @@
 namespace App\Controllers\Settings;
 
 use App\Controllers\BaseController;
-use App\Models\category;
+use App\Models\type;
 use Exception;
 
 /**
- * @property Category category
+ * @property Type type
  * @property session session
  */
 
-class CategoryController extends BaseController
+class TypeController extends BaseController
 {
     public function __construct()
     {
         $this->session = session();
-        $this->category = new Category();
+        $this->type = new Type();
 
-        $this->session->set('menu', 'category');
+        $this->session->set('menu', 'type');
     }
 
     public function index()
@@ -26,14 +26,14 @@ class CategoryController extends BaseController
         if (!isset(session()->user)) {
             return view('login/v_login');
         }
-        return view('settings/category/v_category', [
-            'menu_title' => 'category'
+        return view('settings/type/v_type', [
+            'menu_title' => 'type'
         ]);
     }
 
     public function datatable()
     {
-        $data = $this->category->get();
+        $data = $this->type->get();
         $res = [];
 
         for ($i = 0; $i < count($data); $i++) {
@@ -42,7 +42,6 @@ class CategoryController extends BaseController
             $res['data'][] = [
                 'no' => "<span>" . $i + 1 . "</span>",
                 'nama' => $row['nama'],
-                'id_type' => $row['nama_type'],
                 'action' => "
                 <div class='d-flex flex-nowrap justify-content-center gap-1'>
                     <button class='btn-edit btn btn-warning btn-action text-white' data-row='" . json_encode($row) . "' onclick='edit(this)'><i class='bx bx-edit'></i></button>
@@ -56,14 +55,13 @@ class CategoryController extends BaseController
 
     public function select()
     {
-        $data = $this->category->get();
+        $data = $this->type->get();
         $res = [];
 
         foreach ($data as $row) {
             $res['data'][] = [
                 'value' => encrypted($row['id']),
                 'text' => $row['nama'],
-                'text' => $row['id_type'],
             ];
         }
 
@@ -75,7 +73,6 @@ class CategoryController extends BaseController
         $res = [];
         $id = $this->request->getPost('id');
         $nama = $this->request->getPost('nama');
-        $nama = $this->request->getPost('id_type');
 
         try {
             if (empty($nama)) throw new Exception('nama');
@@ -85,9 +82,9 @@ class CategoryController extends BaseController
             ];
 
             if (empty($id)) {
-                $this->category->store($data);
+                $this->type->store($data);
             } else {
-                $this->category->update(decrypted($id), $data);
+                $this->type->update(decrypted($id), $data);
             }
 
             $res['success'] = 1;
@@ -109,7 +106,7 @@ class CategoryController extends BaseController
         try {
             if (empty($id)) throw new Exception('Id Required!');
 
-            $this->category->remove(decrypted($id));
+            $this->type->remove(decrypted($id));
 
             $res['success'] = 1;
         } catch (Exception $e) {
