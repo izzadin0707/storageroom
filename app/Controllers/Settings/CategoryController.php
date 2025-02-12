@@ -42,6 +42,7 @@ class CategoryController extends BaseController
             $res['data'][] = [
                 'no' => "<span>" . $i + 1 . "</span>",
                 'nama' => $row['nama'],
+                'type' => $row['type_name'],
                 'action' => "
                 <div class='d-flex flex-nowrap justify-content-center gap-1'>
                     <button class='btn-edit btn btn-warning btn-action text-white' data-row='" . json_encode($row) . "' onclick='edit(this)'><i class='bx bx-edit'></i></button>
@@ -55,14 +56,18 @@ class CategoryController extends BaseController
 
     public function select()
     {
-        $data = $this->category->get();
+        $type = $this->request->getPost('type');
+        $data = $this->category->get(['type_name' => $type]);
         $res = [];
+        $res['data'] = [];
 
-        foreach ($data as $row) {
-            $res['data'][] = [
-                'value' => encrypted($row['id']),
-                'text' => $row['nama'],
-            ];
+        if (is_array($data)) {
+            foreach ($data as $row) {
+                $res['data'][] = [
+                    'value' => encrypted($row['id']),
+                    'text' => $row['nama'],
+                ];
+            }
         }
 
         return $this->response->setJSON($res);
@@ -73,12 +78,15 @@ class CategoryController extends BaseController
         $res = [];
         $id = $this->request->getPost('id');
         $nama = $this->request->getPost('nama');
+        $type = $this->request->getPost('type');
 
         try {
             if (empty($nama)) throw new Exception('nama');
+            if (empty($type)) throw new Exception('type');
 
             $data = [
-                'nama' => $nama
+                'nama' => $nama,
+                'id_type' => decrypted($type)
             ];
 
             if (empty($id)) {
