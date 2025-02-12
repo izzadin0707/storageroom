@@ -34,10 +34,40 @@ $routes->group('category', ['filter' => 'auth'], function ($routes) {
     $routes->post('select', 'Settings\CategoryController::select');
 });
 
+$routes->group('type', ['filter' => 'auth'], function ($routes) {
+    $routes->get('/', 'Settings\TypeController::index');
+    $routes->post('save', 'Settings\TypeController::save');
+    $routes->post('delete', 'Settings\TypeController::delete');
+    $routes->post('table', 'Settings\TypeController::datatable');
+    $routes->post('select', 'Settings\TypeController::select');
+});
+
 $routes->group('location', ['filter' => 'auth'], function ($routes) {
     $routes->get('/', 'Main\LocationController::index');
     $routes->post('save', 'Main\LocationController::save');
     $routes->post('delete', 'Main\LocationController::delete');
     $routes->post('table', 'Main\LocationController::datatable');
     $routes->post('select', 'Main\LocationController::select');
+});
+
+$routes->group('product', ['filter' => 'auth'], function ($routes) {
+    $routes->get('/', 'Main\ProductController::index');
+    $routes->post('save', 'Main\ProductController::save');
+    $routes->post('delete', 'Main\ProductController::delete');
+    $routes->post('table', 'Main\ProductController::datatable');
+    $routes->post('select', 'Main\ProductController::select');
+});
+
+$routes->group('storage', ['filter' => 'auth'], function ($routes) {
+    $routes->get('/', 'Main\StorageController::index');
+    $routes->post('save', 'Main\StorageController::save');
+    $routes->post('delete', 'Main\StorageController::delete');
+    $routes->post('table', 'Main\StorageController::datatable');
+    $routes->post('detailtable', 'Main\StorageController::detailtable');
+    $routes->post('select', 'Main\StorageController::select');
+});
+
+$routes->group('history', ['filter' => 'auth'], function ($routes) {
+    $routes->get('/', 'Main\HistoryController::index');
+    $routes->post('table', 'Main\HistoryController::datatable');
 });
