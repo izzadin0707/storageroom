@@ -48,6 +48,10 @@
                     <i class="bx bxs-category-alt fs-5 me-2"></i>
                     <span>Category</span>
                 </div>
+                <div onclick="<?= !empty($_SESSION['menu']) && $_SESSION['menu'] == 'type' ? '' : "window.location.href = '". base_url('/type') ."'" ?>" class="menu <?= !empty($_SESSION['menu']) && $_SESSION['menu'] == 'type' ? 'menu-active' : '' ?> my-2 p-2 rounded-3 text-secondary fw-semibold d-flex align-items-center" style="cursor: pointer;">
+                    <i class="bx bx-copy fs-5 me-2"></i>
+                    <span>Type</span>
+                </div>
             </div>
         </div>
         <div id="copyright" class="d-flex justify-content-center w-100 mt-5 mb-3" style="text-wrap: nowrap;">
@@ -130,6 +134,12 @@
     .custom-tooltip {
         --bs-tooltip-bg: rgb(137,142,255);
         --bs-tooltip-color: white;
+    }
+
+    @media screen and (max-width: 850px) {
+        #sidebar-container {
+            display: none;
+        }
     }
 </style>
 <script>
