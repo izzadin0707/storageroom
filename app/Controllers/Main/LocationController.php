@@ -1,55 +1,53 @@
 <?php
 
-namespace App\Controllers\Settings;
+namespace App\Controllers\Main;
 
 use App\Controllers\BaseController;
-<<<<<<< HEAD
-use App\Models\type;
-=======
-use App\Models\Type;
->>>>>>> 890a278d2f6fa5c29e8ae706bcbebb289925b1d2
+use App\Models\location;
+use CodeIgniter\HTTP\ResponseInterface;
 use Exception;
 
 /**
- * @property Type type
+ * @property Location location
  * @property session session
  */
 
-class TypeController extends BaseController
+class LocationController extends BaseController
 {
     public function __construct()
     {
         $this->session = session();
-        $this->type = new Type();
+        $this->location = new Location();
 
-        $this->session->set('menu', 'type');
+        $this->session->set('menu', 'location');
     }
 
     public function index()
     {
-        if (!isset(session()->user)) {
-            return view('login/v_login');
-        }
-        return view('settings/type/v_type', [
-            'menu_title' => 'type'
+        if (!isset(session()->user))
+	    {
+	        return view('login/v_login');
+	    }
+        return view('Main/location/v_location', [
+            'menu_title' => 'Location'
         ]);
     }
 
     public function datatable()
     {
-        $data = $this->type->get();
+        $data = $this->location->get();
         $res = [];
 
-        for ($i = 0; $i < count($data); $i++) {
+        for ($i=0; $i < count($data) ; $i++) {
             $row = $data[$i];
             $row['id'] = encrypted($row['id']);
             $res['data'][] = [
-                'no' => "<span>" . $i + 1 . "</span>",
+                'no' => "<span>" .$i + 1 . "</span>",
                 'nama' => $row['nama'],
                 'action' => "
                 <div class='d-flex flex-nowrap justify-content-center gap-1'>
-                    <button class='btn-edit btn btn-warning btn-action text-white' data-row='" . json_encode($row) . "' onclick='edit(this)'><i class='bx bx-edit'></i></button>
-                    <button class='btn btn-danger btn-action text-white' data-id='" . $row['id'] . " 'onclick='deleted(this)'><i class='bx bx-trash'></i></button>
+                    <button class='btn-edit btn btn-warning btn-action text-white' data-row='". json_encode($row) ."' onclick='edit(this)'><i class='bx bx-edit'></i></button>
+                    <button class='btn btn-danger btn-action text-white' data-id='". $row['id'] ." 'onclick='deleted(this)'><i class='bx bx-trash'></i></button>
                 </div>"
             ];
         }
@@ -59,7 +57,7 @@ class TypeController extends BaseController
 
     public function select()
     {
-        $data = $this->type->get();
+        $data = $this->location->get();
         $res = [];
 
         foreach ($data as $row) {
@@ -86,9 +84,9 @@ class TypeController extends BaseController
             ];
 
             if (empty($id)) {
-                $this->type->store($data);
+                $this->location->store($data);
             } else {
-                $this->type->update(decrypted($id), $data);
+                $this->location->update(decrypted($id), $data);
             }
 
             $res['success'] = 1;
@@ -110,7 +108,7 @@ class TypeController extends BaseController
         try {
             if (empty($id)) throw new Exception('Id Required!');
 
-            $this->type->remove(decrypted($id));
+            $this->location->remove(decrypted($id));
 
             $res['success'] = 1;
         } catch (Exception $e) {

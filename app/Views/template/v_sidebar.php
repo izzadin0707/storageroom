@@ -49,7 +49,11 @@
                     <span>Category</span>
                 </div>
                 <div onclick="<?= !empty($_SESSION['menu']) && $_SESSION['menu'] == 'type' ? '' : "window.location.href = '". base_url('/type') ."'" ?>" class="menu <?= !empty($_SESSION['menu']) && $_SESSION['menu'] == 'type' ? 'menu-active' : '' ?> my-2 p-2 rounded-3 text-secondary fw-semibold d-flex align-items-center" style="cursor: pointer;">
+<<<<<<< HEAD
                     <i class="bx bxs-category-alt fs-5 me-2"></i>
+=======
+                    <i class="bx bx-copy fs-5 me-2"></i>
+>>>>>>> 890a278d2f6fa5c29e8ae706bcbebb289925b1d2
                     <span>Type</span>
                 </div>
             </div>
@@ -134,6 +138,12 @@
     .custom-tooltip {
         --bs-tooltip-bg: rgb(137,142,255);
         --bs-tooltip-color: white;
+    }
+
+    @media screen and (max-width: 850px) {
+        #sidebar-container {
+            display: none;
+        }
     }
 </style>
 <script>

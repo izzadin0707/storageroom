@@ -10,8 +10,8 @@
         <div class="row">
             <div class="col-12">
                 <div class="mb-2">
-                    <label for="rolename" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">Role Name</label>
-                    <input type="text" class="form-control" style="font-size: .9rem;" id="rolename" name="rolename" placeholder="@ex: Administrator">
+                    <label for="nama" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">Location Name</label>
+                    <input type="text" class="form-control" style="font-size: .9rem;" id="nama" name="nama" placeholder="@ex: L1-R1-B1">
                 </div>
             </div>
         </div>
@@ -32,7 +32,7 @@
         <thead>
             <tr>
                 <th class="text-center">No</th>
-                <th class="text-center">Role Name</th>
+                <th class="text-center">Location Name</th>
                 <th class="text-center">Action</th>
             </tr>
         </thead>
@@ -45,7 +45,7 @@
     $(document).ready(function () {
         $('#example').DataTable( {
             ajax: {
-                url: '<?= base_url('/role/table') ?>',
+                url: '<?= base_url('/location/table') ?>',
                 type: 'POST',
                 dataSrc: function (res) {
                     return res.data || []
@@ -53,7 +53,7 @@
             },
             columns: [
                 {data: 'no', width: '10%', className: 'text-center'},
-                {data: 'rolename'},
+                {data: 'nama'},
                 {data: 'action', width: '10%'},
             ]
         } );
@@ -78,7 +78,7 @@
             $('input').prop('readonly')
 
             $.ajax({
-                'url': '<?= base_url('role/save')?>',
+                'url': '<?= base_url('location/save')?>',
                 'type': 'POST',
                 'data': $(this).serialize(),
                 'success': function (res) {
@@ -100,12 +100,12 @@
         $('#form-card').removeClass('d-none')
         $('#table-card').addClass('d-none')
         $('input[name="id"]').val(row.id)
-        $('input[name="rolename"]').val(row.rolename)
+        $('input[name="nama"]').val(row.nama)
     }
 
     function deleted(e) {
         $.ajax({
-            'url': '<?= base_url('role/delete')?>',
+            'url': '<?= base_url('location/delete')?>',
             'type': 'POST',
             'data': {
                 'id': $(e).data('id')
