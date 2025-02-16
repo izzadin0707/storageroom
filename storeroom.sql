@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 12 Feb 2025 pada 17.57
+-- Waktu pembuatan: 16 Feb 2025 pada 15.37
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -199,7 +199,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `roleid`) VALUES
-(1, 'superuser', '+4ZjXqyj/q9mN77eAa00jYEK5HHl/PSu+d1qGn1/3kcVr1kIRRF+ivzPKlSa0yYMGJvVwzxp9iqDc8lOPdPyr22QyUoKx6Af/47LXGPCDfbeeXKiCVvkAHJDiB4=', 1);
+(1, 'superuser', '+4ZjXqyj/q9mN77eAa00jYEK5HHl/PSu+d1qGn1/3kcVr1kIRRF+ivzPKlSa0yYMGJvVwzxp9iqDc8lOPdPyr22QyUoKx6Af/47LXGPCDfbeeXKiCVvkAHJDiB4=', 1),
+(5, 'arsyi', 'OCn7mej+3v4wEOoV4E6NI0bLZ0P7GJ9jsXvPpfQbVN57XD0caIISmu49ekxSHXLuq/K8s8UaPUD0bf2mqJ0zdl6FvMb8QMh3qWoGirtYmgZzkcBJiXzqwA==', 6);
 
 --
 -- Indexes for dumped tables
@@ -305,7 +306,7 @@ ALTER TABLE `type`
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
