@@ -42,11 +42,7 @@ class CategoryController extends BaseController
             $res['data'][] = [
                 'no' => "<span>" . $i + 1 . "</span>",
                 'nama' => $row['nama'],
-<<<<<<< HEAD
-                'id_type' => $row['nama_type'],
-=======
                 'type' => $row['type_name'],
->>>>>>> 890a278d2f6fa5c29e8ae706bcbebb289925b1d2
                 'action' => "
                 <div class='d-flex flex-nowrap justify-content-center gap-1'>
                     <button class='btn-edit btn btn-warning btn-action text-white' data-row='" . json_encode($row) . "' onclick='edit(this)'><i class='bx bx-edit'></i></button>
@@ -65,14 +61,6 @@ class CategoryController extends BaseController
         $res = [];
         $res['data'] = [];
 
-<<<<<<< HEAD
-        foreach ($data as $row) {
-            $res['data'][] = [
-                'value' => encrypted($row['id']),
-                'text' => $row['nama'],
-                'text' => $row['id_type'],
-            ];
-=======
         if (is_array($data)) {
             foreach ($data as $row) {
                 $res['data'][] = [
@@ -80,7 +68,6 @@ class CategoryController extends BaseController
                     'text' => $row['nama'],
                 ];
             }
->>>>>>> 890a278d2f6fa5c29e8ae706bcbebb289925b1d2
         }
 
         return $this->response->setJSON($res);
@@ -91,11 +78,7 @@ class CategoryController extends BaseController
         $res = [];
         $id = $this->request->getPost('id');
         $nama = $this->request->getPost('nama');
-<<<<<<< HEAD
-        $nama = $this->request->getPost('id_type');
-=======
         $type = $this->request->getPost('type');
->>>>>>> 890a278d2f6fa5c29e8ae706bcbebb289925b1d2
 
         try {
             if (empty($nama)) throw new Exception('nama');

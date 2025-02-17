@@ -39,11 +39,7 @@
             <tr>
                 <th class="text-center">No</th>
                 <th class="text-center">Category Name</th>
-<<<<<<< HEAD
-                <th class="text-center">Type Name</th>
-=======
                 <th class="text-center">Type</th>
->>>>>>> 890a278d2f6fa5c29e8ae706bcbebb289925b1d2
                 <th class="text-center">Action</th>
             </tr>
         </thead>
@@ -53,32 +49,6 @@
 <?= $this->include('template/v_footer') ?>
 
 <script>
-<<<<<<< HEAD
-    $(document).ready(function() {
-        $('#example').DataTable({
-            ajax: {
-                url: '<?= base_url('/category/table') ?>',
-                type: 'POST',
-                dataSrc: function(res) {
-                    return res.data
-                }
-            },
-            columns: [{
-                    data: 'no',
-                    width: '10%',
-                    className: 'text-center'
-                },
-                {
-                    data: 'nama'
-                },
-                {
-                    data: 'id_type'
-                },
-                {
-                    data: 'action',
-                    width: '10%'
-                },
-=======
     $(document).ready(function () {
         generateSelect('#type', '<?= base_url('/type/select') ?>', 'Select Role', true)
 
@@ -95,7 +65,6 @@
                 {data: 'nama'},
                 {data: 'type'},
                 {data: 'action', width: '10%'},
->>>>>>> 890a278d2f6fa5c29e8ae706bcbebb289925b1d2
             ]
         });
 
