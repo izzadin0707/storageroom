@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class Category extends Model
 {
     protected $db;
-    protected $table = "category as a";
+    protected $table = "category";
     protected $primaryKey = 'id';
     protected $allowedFields = ['nama', 'nama_type'];
 
