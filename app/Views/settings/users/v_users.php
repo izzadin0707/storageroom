@@ -1,7 +1,7 @@
 <?= $this->include('template/v_header') ?>
 
 <!-- FORM -->
-<div id="form-card" class="d-none w-100 bg-white rounded-3 shadow-sm p-2">
+<div id="form-card" class="d-none w-100 bg-white rounded-3 p-2">
     <div class="border-bottom d-flex justify-content-start pb-2 mb-4 fw-semibold text-secondary">
         <span><?= $menu_title ?> Form</span>
     </div>
@@ -23,7 +23,12 @@
             <div class="col-6">
                 <div class="mb-2">
                     <label for="role" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">Role</label>
-                    <select class="form-select" style="font-size: .9rem;" id="role" name="role" aria-label="Default select example"></select>
+                    <select class="form-select" style="font-size: .9rem;" id="role" name="role" aria-label="Default select example">
+                        <option selected disabled>Select Role</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -34,7 +39,7 @@
     </form>
 </div>
 <!-- DATATABLE -->
-<div id="table-card" class="w-100 bg-white rounded-3 shadow-sm p-2">
+<div id="table-card" class="w-100 bg-white rounded-3 p-2">
     <div class="border-bottom d-flex justify-content-between align-items-center pb-2 mb-4">
         <span class="fw-semibold text-secondary">General Information</span>
         <button id="btn-create" class="btn btn-primary d-flex">Create New</button>
@@ -63,7 +68,7 @@
                 url: '<?= base_url('/users/table') ?>',
                 type: 'POST',
                 dataSrc: function (res) {
-                    return res.data || []
+                    return res.data
                 }
             },
             columns: [
@@ -78,13 +83,11 @@
         $('#btn-create').on('click', function () {
             $('#form-card').removeClass('d-none')
             $('#table-card').addClass('d-none')
-            $('input[name="id"]').val(null)
         })
         
         $('#btn-cancel').on('click', function () {
             $('#form-card').addClass('d-none')
             $('#table-card').removeClass('d-none')
-            $('input[name="id"]').val(null)
             if ($('#form-card').hasClass('d-none')) {
                 $('#form-card').find('form').trigger('reset')
             }

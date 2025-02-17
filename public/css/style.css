@@ -8,11 +8,6 @@ select:focus {
     border-color: #676df0 !important;
 }
 
-textarea:focus {
-    box-shadow: none !important;
-    border-color: #676df0 !important;
-}
-
 .btn-primary {
     background-color: #676df0;
 }

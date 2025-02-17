@@ -1,7 +1,7 @@
 <?= $this->include('template/v_header') ?>
 
 <!-- FORM -->
-<div id="form-card" class="d-none w-100 bg-white rounded-3 shadow-sm p-2">
+<div id="form-card" class="d-none w-100 bg-white rounded-3 p-2">
     <div class="border-bottom d-flex justify-content-start pb-2 mb-4 fw-semibold text-secondary">
         <span><?= $menu_title ?> Form</span>
     </div>
@@ -23,7 +23,7 @@
 </div>
 
 <!-- DATATABLE -->
-<div id="table-card" class="w-100 bg-white rounded-3 shadow-sm p-2">
+<div id="table-card" class="w-100 bg-white rounded-3 p-2">
     <div class="border-bottom d-flex justify-content-between align-items-center pb-2 mb-4">
         <span class="fw-semibold text-secondary">General Information</span>
         <button id="btn-create" class="btn btn-primary d-flex">Create New</button>
@@ -48,7 +48,7 @@
                 url: '<?= base_url('/role/table') ?>',
                 type: 'POST',
                 dataSrc: function (res) {
-                    return res.data || []
+                    return res.data
                 }
             },
             columns: [
@@ -61,13 +61,11 @@
         $('#btn-create').on('click', function () {
             $('#form-card').removeClass('d-none')
             $('#table-card').addClass('d-none')
-            $('input[name="id"]').val(null)
         })
         
         $('#btn-cancel').on('click', function () {
             $('#form-card').addClass('d-none')
             $('#table-card').removeClass('d-none')
-            $('input[name="id"]').val(null)
             if ($('#form-card').hasClass('d-none')) {
                 $('#form-card').find('form').trigger('reset')
             }

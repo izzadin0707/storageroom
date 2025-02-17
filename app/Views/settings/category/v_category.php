@@ -1,23 +1,17 @@
 <?= $this->include('template/v_header') ?>
 
 <!-- FORM -->
-<div id="form-card" class="d-none w-100 bg-white rounded-3 shadow-sm p-2">
+<div id="form-card" class="d-none w-100 bg-white rounded-3 p-2">
     <div class="border-bottom d-flex justify-content-start pb-2 mb-4 fw-semibold text-secondary">
         <span><?= $menu_title ?> Form</span>
     </div>
     <form>
         <input type="hidden" name="id" value="">
         <div class="row">
-            <div class="col-6">
+            <div class="col-12">
                 <div class="mb-2">
                     <label for="nama" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">Category Name</label>
                     <input type="text" class="form-control" style="font-size: .9rem;" id="nama" name="nama" placeholder="Category Name">
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="mb-2">
-                    <label for="type" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">Type</label>
-                    <select class="form-select" style="font-size: .9rem;" id="type" name="type" aria-label="Default select example"></select>
                 </div>
             </div>
         </div>
@@ -29,7 +23,7 @@
 </div>
 
 <!-- DATATABLE -->
-<div id="table-card" class="w-100 bg-white rounded-3 shadow-sm p-2">
+<div id="table-card" class="w-100 bg-white rounded-3 p-2">
     <div class="border-bottom d-flex justify-content-between align-items-center pb-2 mb-4">
         <span class="fw-semibold text-secondary">General Information</span>
         <button id="btn-create" class="btn btn-primary d-flex">Create New</button>
@@ -39,11 +33,7 @@
             <tr>
                 <th class="text-center">No</th>
                 <th class="text-center">Category Name</th>
-<<<<<<< HEAD
                 <th class="text-center">Type Name</th>
-=======
-                <th class="text-center">Type</th>
->>>>>>> 890a278d2f6fa5c29e8ae706bcbebb289925b1d2
                 <th class="text-center">Action</th>
             </tr>
         </thead>
@@ -53,7 +43,6 @@
 <?= $this->include('template/v_footer') ?>
 
 <script>
-<<<<<<< HEAD
     $(document).ready(function() {
         $('#example').DataTable({
             ajax: {
@@ -78,37 +67,17 @@
                     data: 'action',
                     width: '10%'
                 },
-=======
-    $(document).ready(function () {
-        generateSelect('#type', '<?= base_url('/type/select') ?>', 'Select Role', true)
-
-        $('#example').DataTable( {
-            ajax: {
-                url: '<?= base_url('/category/table') ?>',
-                type: 'POST',
-                dataSrc: function (res) {
-                    return res.data || []
-                }
-            },
-            columns: [
-                {data: 'no', width: '10%', className: 'text-center'},
-                {data: 'nama'},
-                {data: 'type'},
-                {data: 'action', width: '10%'},
->>>>>>> 890a278d2f6fa5c29e8ae706bcbebb289925b1d2
             ]
         });
 
         $('#btn-create').on('click', function() {
             $('#form-card').removeClass('d-none')
             $('#table-card').addClass('d-none')
-            $('input[name="id"]').val(null)
         })
 
         $('#btn-cancel').on('click', function() {
             $('#form-card').addClass('d-none')
             $('#table-card').removeClass('d-none')
-            $('input[name="id"]').val(null)
             if ($('#form-card').hasClass('d-none')) {
                 $('#form-card').find('form').trigger('reset')
             }

@@ -49,28 +49,3 @@ $routes->group('location', ['filter' => 'auth'], function ($routes) {
     $routes->post('table', 'Main\LocationController::datatable');
     $routes->post('select', 'Main\LocationController::select');
 });
-<<<<<<< HEAD
-=======
-
-$routes->group('product', ['filter' => 'auth'], function ($routes) {
-    $routes->get('/', 'Main\ProductController::index');
-    $routes->post('save', 'Main\ProductController::save');
-    $routes->post('delete', 'Main\ProductController::delete');
-    $routes->post('table', 'Main\ProductController::datatable');
-    $routes->post('select', 'Main\ProductController::select');
-});
-
-$routes->group('storage', ['filter' => 'auth'], function ($routes) {
-    $routes->get('/', 'Main\StorageController::index');
-    $routes->post('save', 'Main\StorageController::save');
-    $routes->post('delete', 'Main\StorageController::delete');
-    $routes->post('table', 'Main\StorageController::datatable');
-    $routes->post('detailtable', 'Main\StorageController::detailtable');
-    $routes->post('select', 'Main\StorageController::select');
-});
-
-$routes->group('history', ['filter' => 'auth'], function ($routes) {
-    $routes->get('/', 'Main\HistoryController::index');
-    $routes->post('table', 'Main\HistoryController::datatable');
-});
->>>>>>> 890a278d2f6fa5c29e8ae706bcbebb289925b1d2

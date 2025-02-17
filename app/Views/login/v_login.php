@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StorageRoom</title>
+    <title>Document</title>
     <?= $this->include('template/v_import') ?>
 </head>
 <style>
@@ -59,7 +59,6 @@
 
 <script>
     $(document).ready(function () {
-        Cookies.set('sidebar-status', 'open')
         $('#login-form').submit(function (e) {
             e.preventDefault();
             $('input').prop('readonly')

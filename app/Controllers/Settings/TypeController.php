@@ -3,11 +3,7 @@
 namespace App\Controllers\Settings;
 
 use App\Controllers\BaseController;
-<<<<<<< HEAD
 use App\Models\type;
-=======
-use App\Models\Type;
->>>>>>> 890a278d2f6fa5c29e8ae706bcbebb289925b1d2
 use Exception;
 
 /**
