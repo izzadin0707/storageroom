@@ -19,12 +19,13 @@
         })
     })
     
-    function generateSelect(element, url, placeholder = 'Select Option', required = false) {
+    function generateSelect(element, url, placeholder = null, required = false, data = {}) {
         $(element).html('');
-        $(element).append(`<option selected ${required ? 'disabled' : ''}>${placeholder}</option>`)
+        if (placeholder != null) $(element).append(`<option selected ${required ? 'disabled' : ''}>${placeholder}</option>`)
         $.ajax({
             'url' : url,
             'type': 'POST',
+            'data': data,
             'success': function (res) {
                 $.each(res.data, function (index, row) {
                     $(element).append(`<option value="${row.value}">${row.text}</option>`)
