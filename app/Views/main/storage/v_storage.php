@@ -30,6 +30,7 @@
         <thead>
             <tr>
                 <th class="text-center">No</th>
+                <th class="text-center">Code</th>
                 <th class="text-center">Product Name</th>
                 <th class="text-center">Qty</th>
                 <th class="text-center">Created By</th>
@@ -190,6 +191,7 @@
             },
             columns: [
                 {data: 'no', width: '10%', className: 'text-center align-middle'},
+                {data: 'code', className: 'align-middle'},
                 {data: 'nama', className: 'align-middle'},
                 {data: 'qty', width: '10%', className: 'text-start align-middle'},
                 {data: 'createdby', width: '15%'},

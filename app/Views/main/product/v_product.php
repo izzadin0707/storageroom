@@ -10,6 +10,10 @@
         <div class="row">
             <div class="col-6">
                 <div class="mb-2">
+                    <label for="code" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">Product Code</label>
+                    <input type="text" class="form-control" style="font-size: .9rem;" id="code" name="code" placeholder="@ex: KM01" required>
+                </div>
+                <div class="mb-2">
                     <label for="nama" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">Product Name</label>
                     <input type="text" class="form-control" style="font-size: .9rem;" id="nama" name="nama" placeholder="@ex: Kotak Susu" required>
                 </div>
@@ -17,12 +21,12 @@
                     <label for="description" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">Description</label>
                     <textarea class="form-control" style="font-size: .9rem; resize: none; height: 106px;" id="description" name="description" placeholder="@ex: Rasa Vanila"></textarea>
                 </div>
+            </div>
+            <div class="col-6">
                 <div class="mb-2">
                     <label for="expired" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">Expired Date</label>
                     <input type="date" class="form-control" style="font-size: .9rem;" id="expired" name="expired" required>
                 </div>
-            </div>
-            <div class="col-6">
                 <div class="mb-2">
                     <label for="qty" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">Qty</label>
                     <input type="number" class="form-control" style="font-size: .9rem;" id="qty" name="qty" min="0" value="0" required>
@@ -53,6 +57,7 @@
         <thead>
             <tr>
                 <th class="text-center">No</th>
+                <th class="text-center">Product Code</th>
                 <th class="text-center">Product Name</th>
                 <th class="text-center">Category</th>
                 <th class="text-center">UOM</th>
@@ -67,7 +72,7 @@
 <?= $this->include('template/v_footer') ?>
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         generateSelect('#category', '<?= base_url('/category/select') ?>', 'Select Category', true, {
             type: 'product'
         })
@@ -75,32 +80,51 @@
             type: 'uom'
         })
 
-        $('#example').DataTable( {
+        $('#example').DataTable({
             ajax: {
                 url: '<?= base_url('/product/table') ?>',
                 type: 'POST',
-                dataSrc: function (res) {
+                dataSrc: function(res) {
                     return res.data || []
                 }
             },
-            columns: [
-                {data: 'no', width: '10%', className: 'text-center'},
-                {data: 'nama'},
-                {data: 'qty'},
-                {data: 'category'},
-                {data: 'uom'},
-                {data: 'expired'},
-                {data: 'action', width: '10%'},
+            columns: [{
+                    data: 'no',
+                    width: '10%',
+                    className: 'text-center'
+                },
+                {
+                    data: 'code'
+                },
+                {
+                    data: 'nama'
+                },
+                {
+                    data: 'qty'
+                },
+                {
+                    data: 'category'
+                },
+                {
+                    data: 'uom'
+                },
+                {
+                    data: 'expired'
+                },
+                {
+                    data: 'action',
+                    width: '10%'
+                },
             ]
-        } );
+        });
 
-        $('#btn-create').on('click', function () {
+        $('#btn-create').on('click', function() {
             $('#form-card').removeClass('d-none')
             $('#table-card').addClass('d-none')
             $('input[name="id"]').val(null)
         })
-        
-        $('#btn-cancel').on('click', function () {
+
+        $('#btn-cancel').on('click', function() {
             $('#form-card').addClass('d-none')
             $('#table-card').removeClass('d-none')
             $('input[name="id"]').val(null)
@@ -109,15 +133,15 @@
             }
         })
 
-        $('form').submit(function (e) {
+        $('form').submit(function(e) {
             e.preventDefault();
             $('input').prop('readonly')
 
             $.ajax({
-                'url': '<?= base_url('product/save')?>',
+                'url': '<?= base_url('product/save') ?>',
                 'type': 'POST',
                 'data': $(this).serialize(),
-                'success': function (res) {
+                'success': function(res) {
                     if (res.success == 0) {
                         if (res.error != undefined) {
                             $(`input[name="${res.error}"]`).focus()
@@ -137,6 +161,7 @@
         $('#form-card').removeClass('d-none')
         $('#table-card').addClass('d-none')
         $('input[name="id"]').val(row.id)
+        $('input[name="code"]').val(row.code)
         $('input[name="nama"]').val(row.nama)
         $('textarea[name="description"]').val(row.description)
         $('input[name="qty"]').val(row.qty)
@@ -153,12 +178,12 @@
 
     function deleted(e) {
         $.ajax({
-            'url': '<?= base_url('product/delete')?>',
+            'url': '<?= base_url('product/delete') ?>',
             'type': 'POST',
             'data': {
                 'id': $(e).data('id')
             },
-            'success': function (res) {
+            'success': function(res) {
                 console.log(res)
                 if (res.success == 0) {
                     if (res.error != undefined) alert(res.error)
