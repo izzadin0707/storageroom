@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 16 Feb 2025 pada 15.37
+-- Waktu pembuatan: 11 Apr 2025 pada 01.46
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -100,6 +100,7 @@ CREATE TABLE `product` (
   `id` int(11) NOT NULL,
   `id_category` int(11) DEFAULT NULL,
   `id_uom` int(11) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
   `nama` varchar(255) DEFAULT NULL,
   `qty` int(16) DEFAULT 0,
   `description` text DEFAULT NULL,
@@ -112,10 +113,10 @@ CREATE TABLE `product` (
 -- Dumping data untuk tabel `product`
 --
 
-INSERT INTO `product` (`id`, `id_category`, `id_uom`, `nama`, `qty`, `description`, `expired`, `created_at`, `updated_at`) VALUES
-(1, 5, 2, 'Onigiri Alfamart', 90, 'Rasa salmon', '2025-02-19', '2025-02-11 17:56:07', '2025-02-11 10:59:41'),
-(2, 7, 2, 'Ultramilk Rasa Cokelat', 10, '100 Liter', '2025-02-27', '2025-02-11 18:00:21', '2025-02-11 11:00:21'),
-(3, 5, 2, 'Odol Sikat Gigi', 60, 'Rasa Mint', '2025-04-30', '2025-02-12 01:22:33', '2025-02-11 18:22:33');
+INSERT INTO `product` (`id`, `id_category`, `id_uom`, `code`, `nama`, `qty`, `description`, `expired`, `created_at`, `updated_at`) VALUES
+(1, 5, 2, 'PRD0001', 'Onigiri Alfamart', 90, 'Rasa salmon', '2025-02-19', '2025-02-11 17:56:07', '2025-02-11 10:59:41'),
+(2, 7, 2, 'PRD0002', 'Ultramilk Rasa Cokelat', 10, '100 Liter', '2025-02-27', '2025-02-11 18:00:21', '2025-02-11 11:00:21'),
+(3, 5, 2, 'PRD0003', 'Odol Sikat Gigi', 60, 'Rasa Mint', '2025-04-30', '2025-02-12 01:22:33', '2025-02-11 18:22:33');
 
 -- --------------------------------------------------------
 
@@ -135,6 +136,49 @@ CREATE TABLE `role` (
 INSERT INTO `role` (`id`, `rolename`) VALUES
 (1, 'admin'),
 (6, 'employee');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `stock_transaction`
+--
+
+CREATE TABLE `stock_transaction` (
+  `id` int(11) NOT NULL,
+  `id_location` int(11) DEFAULT NULL,
+  `id_category` int(11) DEFAULT NULL,
+  `transcode` varchar(255) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `isrelease` tinyint(1) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `stock_transaction`
+--
+
+INSERT INTO `stock_transaction` (`id`, `id_location`, `id_category`, `transcode`, `date`, `note`, `isrelease`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
+(14, 1, 8, 'TRC10042514', '2025-05-02', 'sadasd', 0, 1, '2025-04-10 10:50:19', NULL, NULL),
+(15, 1, 9, 'TRC10042515', '2025-04-24', 'asd', 0, 1, '2025-04-10 10:50:41', NULL, NULL),
+(16, 1, 9, 'TRC10042516', '2025-04-11', 'sdasd', 0, 1, '2025-04-10 10:53:24', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `stock_transaction_detail`
+--
+
+CREATE TABLE `stock_transaction_detail` (
+  `id` int(11) NOT NULL,
+  `id_transaction` int(11) DEFAULT NULL,
+  `id_product` int(11) DEFAULT NULL,
+  `qty` int(11) DEFAULT NULL,
+  `note` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -238,6 +282,18 @@ ALTER TABLE `role`
   ADD UNIQUE KEY `role_name` (`rolename`);
 
 --
+-- Indeks untuk tabel `stock_transaction`
+--
+ALTER TABLE `stock_transaction`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `stock_transaction_detail`
+--
+ALTER TABLE `stock_transaction_detail`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `storage`
 --
 ALTER TABLE `storage`
@@ -282,13 +338,25 @@ ALTER TABLE `location`
 -- AUTO_INCREMENT untuk tabel `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `role`
 --
 ALTER TABLE `role`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT untuk tabel `stock_transaction`
+--
+ALTER TABLE `stock_transaction`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT untuk tabel `stock_transaction_detail`
+--
+ALTER TABLE `stock_transaction_detail`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `storage`
