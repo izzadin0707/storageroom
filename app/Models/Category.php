@@ -16,7 +16,7 @@ class Category extends Model
         $this->builder = $this->db->table($this->table);
     }
 
-    public function get($filter = []) {
+    public function get($filter = [], $search = null) {
         $x = $this->builder->select('category.*, t.nama as type_name')
         ->join('type as t', 't.id = category.id_type', 'left');
 
@@ -26,6 +26,10 @@ class Category extends Model
                 continue;
             }
             $x->where($key, $value);
+        }
+
+        if (isset($search)) {
+            $x->where('LOWER(category.nama) LIKE', '%'.strtolower($search).'%');
         }
         
         return $x->get()->getResultArray();
