@@ -9,7 +9,7 @@ class Product extends Model
     protected $db;
     protected $table = "product";
     protected $primaryKey = 'id';
-    protected $allowedFields = ['id_category', 'id_uom', 'nama', 'qty', 'description', 'expired', 'created_at', 'updated_at'];
+    protected $allowedFields = ['id_category', 'id_uom', 'code', 'nama', 'description', 'expired', 'created_at', 'updated_at'];
 
     public function __construct() {
         $this->db = db_connect();

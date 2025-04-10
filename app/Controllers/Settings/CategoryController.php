@@ -57,7 +57,8 @@ class CategoryController extends BaseController
     public function select()
     {
         $type = $this->request->getPost('type');
-        $data = $this->category->get(['type_name' => $type]);
+        $search = $this->request->getPost('search');
+        $data = $this->category->get(['type_name' => $type], $search);
         $res = [];
         $res['data'] = [];
 

@@ -43,8 +43,8 @@ class ProductController extends BaseController
             $row['id'] = encrypted($row['id']);
             $res['data'][] = [
                 'no' => "<span>" .$i + 1 . "</span>",
+                'code' => $row['code'],
                 'nama' => $row['nama'],
-                'qty' => $row['qty'],
                 'category' => $row['category'],
                 'uom' => $row['uom'],
                 'expired' => $row['expired'],
@@ -82,24 +82,24 @@ class ProductController extends BaseController
     {
         $res = [];
         $id = $this->request->getPost('id');
+        $code = $this->request->getPost('code');
         $nama = $this->request->getPost('nama');
-        $qty = $this->request->getPost('qty');
         $description = $this->request->getPost('description');
         $expired = $this->request->getPost('expired');
         $category = $this->request->getPost('category');
         $uom = $this->request->getPost('uom');
 
         try {
+            if (empty($code)) throw new Exception('code');
             if (empty($nama)) throw new Exception('nama');
-            if (empty($qty)) throw new Exception('qty');
             if (empty($description)) throw new Exception('description');
             if (empty($expired)) throw new Exception('expired');
             if (empty($category)) throw new Exception('category');
             if (empty($uom)) throw new Exception('uom');
 
             $data = [
+                'code' => $code,
                 'nama' => $nama,
-                'qty' => $qty,
                 'description' => $description,
                 'expired' => $expired,
                 'id_category' => decrypted($category),

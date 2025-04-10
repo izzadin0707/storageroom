@@ -58,6 +58,17 @@ $routes->group('product', ['filter' => 'auth'], function ($routes) {
     $routes->post('select', 'Main\ProductController::select');
 });
 
+$routes->group('transaction', ['filter' => 'auth'], function ($routes) {
+    $routes->get('/', 'Main\StockTransactionController::index');
+    // $routes->get('form/(:any)', 'Main\StockTransactionController::form/$1');
+    $routes->get('form', 'Main\StockTransactionController::form');
+    $routes->post('save', 'Main\StockTransactionController::save');
+    $routes->post('delete', 'Main\StockTransactionController::delete');
+    $routes->post('table', 'Main\StockTransactionController::datatable');
+    $routes->post('detailtable', 'Main\StockTransactionController::detailtable');
+    $routes->post('release', 'Main\StockTransactionController::release');
+});
+
 $routes->group('storage', ['filter' => 'auth'], function ($routes) {
     $routes->get('/', 'Main\StorageController::index');
     $routes->post('save', 'Main\StorageController::save');

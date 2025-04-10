@@ -10,6 +10,10 @@
         <div class="row">
             <div class="col-6">
                 <div class="mb-2">
+                    <label for="code" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">Product Code</label>
+                    <input type="text" class="form-control" style="font-size: .9rem;" id="code" name="code" placeholder="@ex: PRD0001" required>
+                </div>
+                <div class="mb-2">
                     <label for="nama" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">Product Name</label>
                     <input type="text" class="form-control" style="font-size: .9rem;" id="nama" name="nama" placeholder="@ex: Kotak Susu" required>
                 </div>
@@ -17,15 +21,11 @@
                     <label for="description" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">Description</label>
                     <textarea class="form-control" style="font-size: .9rem; resize: none; height: 106px;" id="description" name="description" placeholder="@ex: Rasa Vanila"></textarea>
                 </div>
-                <div class="mb-2">
-                    <label for="expired" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">Expired Date</label>
-                    <input type="date" class="form-control" style="font-size: .9rem;" id="expired" name="expired" required>
-                </div>
             </div>
             <div class="col-6">
                 <div class="mb-2">
-                    <label for="qty" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">Qty</label>
-                    <input type="number" class="form-control" style="font-size: .9rem;" id="qty" name="qty" min="0" value="0" required>
+                    <label for="expired" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">Expired Date</label>
+                    <input type="date" class="form-control" style="font-size: .9rem;" id="expired" name="expired" required>
                 </div>
                 <div class="mb-2">
                     <label for="uom" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">UOM</label>
@@ -33,7 +33,7 @@
                 </div>
                 <div class="mb-2">
                     <label for="category" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">Category</label>
-                    <select class="form-select" style="font-size: .9rem;" id="category" name="category" aria-label="Default select example"></select>
+                    <select class="form-select w-100" style="font-size: .9rem;" id="category" name="category" aria-label="Default select example"></select>
                 </div>
             </div>
         </div>
@@ -53,10 +53,10 @@
         <thead>
             <tr>
                 <th class="text-center">No</th>
+                <th class="text-center">Product Code</th>
                 <th class="text-center">Product Name</th>
                 <th class="text-center">Category</th>
                 <th class="text-center">UOM</th>
-                <th class="text-center">Qty</th>
                 <th class="text-center">Expired</th>
                 <th class="text-center">Action</th>
             </tr>
@@ -68,10 +68,15 @@
 
 <script>
     $(document).ready(function () {
-        generateSelect('#category', '<?= base_url('/category/select') ?>', 'Select Category', true, {
+        // $('#category').select2( {
+        //     theme: 'bootstrap-5',
+        //     placeholder: 'Select Category'
+        // } );
+
+        generateSelect2('#category', '<?= base_url('/category/select') ?>', 'Select Category', true, {
             type: 'product'
         })
-        generateSelect('#uom', '<?= base_url('/category/select') ?>', 'Select UOM', true, {
+        generateSelect2('#uom', '<?= base_url('/category/select') ?>', 'Select UOM', true, {
             type: 'uom'
         })
 
@@ -85,8 +90,8 @@
             },
             columns: [
                 {data: 'no', width: '10%', className: 'text-center'},
+                {data: 'code'},
                 {data: 'nama'},
-                {data: 'qty'},
                 {data: 'category'},
                 {data: 'uom'},
                 {data: 'expired'},
@@ -137,6 +142,7 @@
         $('#form-card').removeClass('d-none')
         $('#table-card').addClass('d-none')
         $('input[name="id"]').val(row.id)
+        $('input[name="code"]').val(row.code)
         $('input[name="nama"]').val(row.nama)
         $('textarea[name="description"]').val(row.description)
         $('input[name="qty"]').val(row.qty)
