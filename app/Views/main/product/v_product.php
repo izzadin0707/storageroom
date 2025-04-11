@@ -11,11 +11,7 @@
             <div class="col-6">
                 <div class="mb-2">
                     <label for="code" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">Product Code</label>
-<<<<<<< HEAD
-                    <input type="text" class="form-control" style="font-size: .9rem;" id="code" name="code" placeholder="@ex: KM01" required>
-=======
                     <input type="text" class="form-control" style="font-size: .9rem;" id="code" name="code" placeholder="@ex: PRD0001" required>
->>>>>>> a7b3f01ec3d6bedd39f00f8d0501d62d1d108c2f
                 </div>
                 <div class="mb-2">
                     <label for="nama" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">Product Name</label>
@@ -27,13 +23,6 @@
                 </div>
             </div>
             <div class="col-6">
-<<<<<<< HEAD
-                <div class="mb-2">
-                    <label for="expired" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">Expired Date</label>
-                    <input type="date" class="form-control" style="font-size: .9rem;" id="expired" name="expired" required>
-                </div>
-=======
->>>>>>> a7b3f01ec3d6bedd39f00f8d0501d62d1d108c2f
                 <div class="mb-2">
                     <label for="expired" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">Expired Date</label>
                     <input type="date" class="form-control" style="font-size: .9rem;" id="expired" name="expired" required>
@@ -78,10 +67,6 @@
 <?= $this->include('template/v_footer') ?>
 
 <script>
-<<<<<<< HEAD
-    $(document).ready(function() {
-        generateSelect('#category', '<?= base_url('/category/select') ?>', 'Select Category', true, {
-=======
     $(document).ready(function () {
         // $('#category').select2( {
         //     theme: 'bootstrap-5',
@@ -89,7 +74,6 @@
         // } );
 
         generateSelect2('#category', '<?= base_url('/category/select') ?>', 'Select Category', true, {
->>>>>>> a7b3f01ec3d6bedd39f00f8d0501d62d1d108c2f
             type: 'product'
         })
         generateSelect2('#uom', '<?= base_url('/category/select') ?>', 'Select UOM', true, {
@@ -104,35 +88,6 @@
                     return res.data || []
                 }
             },
-<<<<<<< HEAD
-            columns: [{
-                    data: 'no',
-                    width: '10%',
-                    className: 'text-center'
-                },
-                {
-                    data: 'code'
-                },
-                {
-                    data: 'nama'
-                },
-                {
-                    data: 'qty'
-                },
-                {
-                    data: 'category'
-                },
-                {
-                    data: 'uom'
-                },
-                {
-                    data: 'expired'
-                },
-                {
-                    data: 'action',
-                    width: '10%'
-                },
-=======
             columns: [
                 {data: 'no', width: '10%', className: 'text-center'},
                 {data: 'code'},
@@ -141,7 +96,6 @@
                 {data: 'uom'},
                 {data: 'expired'},
                 {data: 'action', width: '10%'},
->>>>>>> a7b3f01ec3d6bedd39f00f8d0501d62d1d108c2f
             ]
         });
 
