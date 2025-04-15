@@ -68,14 +68,6 @@
 
 <script>
     $(document).ready(function () {
-
-        generateSelect2('#category', '<?= base_url('/category/select') ?>', 'Select Category', true, {
-            type: 'product'
-        })
-        generateSelect2('#uom', '<?= base_url('/category/select') ?>', 'Select UOM', true, {
-            type: 'uom'
-        })
-
         $('#example').DataTable( {
             ajax: {
                 url: '<?= base_url('/dashboard/table') ?>',

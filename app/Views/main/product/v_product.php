@@ -109,6 +109,8 @@
             $('#form-card').addClass('d-none')
             $('#table-card').removeClass('d-none')
             $('input[name="id"]').val(null)
+            $('select[name="category"]').html(null).trigger('change')
+            $('select[name="uom"]').html(null).trigger('change')
             if ($('#form-card').hasClass('d-none')) {
                 $('#form-card').find('form').trigger('reset')
             }
@@ -147,14 +149,9 @@
         $('textarea[name="description"]').val(row.description)
         $('input[name="qty"]').val(row.qty)
         $('input[name="expired"]').val(row.expired)
-        $('select[name="uom"] option').prop('selected', false)
-        $('select[name="uom"] option').prop('selected', false).filter(function() {
-            return $(this).text() === row.uom;
-        }).prop('selected', true);
-        $('select[name="category"] option').prop('selected', false)
-        $('select[name="category"] option').prop('selected', false).filter(function() {
-            return $(this).text() === row.category;
-        }).prop('selected', true);
+
+        $('select[name="uom"]').append('<option value="' + row.id_uom + '" selected>' + row.uom + '</option>')
+        $('select[name="category"]').append('<option value="' + row.id_category + '" selected>' + row.category + '</option>')
     }
 
     function deleted(e) {

@@ -6,6 +6,7 @@
 
 <script>
     $(document).ready(function () {
+        
         $('#logout-btn').on('click', function () {
             $.ajax({
                 'url': '<?= base_url('logout-process')?>',
@@ -17,6 +18,26 @@
                 }
             })
         })
+        
+        $('#mobile-logout-btn').on('click', function() {
+            $('#logout-btn').trigger('click');
+        });
+        
+        // Fix for navbar toggle
+        $('.navbar-toggler').on('click', function() {
+            if ($('#mobileNavContent').hasClass('show')) {
+                $('#mobileNavContent').removeClass('show');
+            } else {
+                $('#mobileNavContent').addClass('show');
+            }
+        });
+        
+        // Close navbar when clicking on a menu item
+        $('.mobile-navbar .nav-link').on('click', function() {
+            if ($('#mobileNavContent').hasClass('show')) {
+                $('#mobileNavContent').removeClass('show');
+            }
+        });
     })
     
     function generateSelect(element, url, placeholder = null, required = false, data = {}) {

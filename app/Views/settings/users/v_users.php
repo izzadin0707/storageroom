@@ -56,7 +56,7 @@
 
 <script>
     $(document).ready(function () {
-        generateSelect('#role', '<?= base_url('/role/select') ?>', 'Select Role', true)
+        generateSelect2('#role', '<?= base_url('/role/select') ?>', 'Select Role', true)
 
         $('#example').DataTable( {
             ajax: {
@@ -85,6 +85,7 @@
             $('#form-card').addClass('d-none')
             $('#table-card').removeClass('d-none')
             $('input[name="id"]').val(null)
+            $('select[name="role"]').html(null).trigger('change')
             if ($('#form-card').hasClass('d-none')) {
                 $('#form-card').find('form').trigger('reset')
             }
@@ -120,10 +121,7 @@
         $('input[name="id"]').val(row.id)
         $('input[name="username"]').val(row.username)
         $('input[name="password"]').val(row.password)
-        $('select[name="role"] option').prop('selected', false)
-        $('select[name="role"] option').prop('selected', false).filter(function() {
-            return $(this).text() === row.rolename;
-        }).prop('selected', true);
+        $('select[name="role"]').append('<option value="' + row.id_role + '" selected>' + row.rolename + '</option>')
     }
 
     function deleted(e) {

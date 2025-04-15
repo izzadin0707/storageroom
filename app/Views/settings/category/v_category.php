@@ -78,6 +78,7 @@
             $('#form-card').addClass('d-none')
             $('#table-card').removeClass('d-none')
             $('input[name="id"]').val(null)
+            $('select[name="type"]').html(null).trigger('change')
             if ($('#form-card').hasClass('d-none')) {
                 $('#form-card').find('form').trigger('reset')
             }
