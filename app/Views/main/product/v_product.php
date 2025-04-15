@@ -80,11 +80,11 @@
             type: 'uom'
         })
 
-        $('#example').DataTable( {
+        $('#example').DataTable({
             ajax: {
                 url: '<?= base_url('/product/table') ?>',
                 type: 'POST',
-                dataSrc: function (res) {
+                dataSrc: function(res) {
                     return res.data || []
                 }
             },
@@ -97,15 +97,15 @@
                 {data: 'expired'},
                 {data: 'action', width: '10%'},
             ]
-        } );
+        });
 
-        $('#btn-create').on('click', function () {
+        $('#btn-create').on('click', function() {
             $('#form-card').removeClass('d-none')
             $('#table-card').addClass('d-none')
             $('input[name="id"]').val(null)
         })
-        
-        $('#btn-cancel').on('click', function () {
+
+        $('#btn-cancel').on('click', function() {
             $('#form-card').addClass('d-none')
             $('#table-card').removeClass('d-none')
             $('input[name="id"]').val(null)
@@ -114,15 +114,15 @@
             }
         })
 
-        $('form').submit(function (e) {
+        $('form').submit(function(e) {
             e.preventDefault();
             $('input').prop('readonly')
 
             $.ajax({
-                'url': '<?= base_url('product/save')?>',
+                'url': '<?= base_url('product/save') ?>',
                 'type': 'POST',
                 'data': $(this).serialize(),
-                'success': function (res) {
+                'success': function(res) {
                     if (res.success == 0) {
                         if (res.error != undefined) {
                             $(`input[name="${res.error}"]`).focus()
@@ -159,12 +159,12 @@
 
     function deleted(e) {
         $.ajax({
-            'url': '<?= base_url('product/delete')?>',
+            'url': '<?= base_url('product/delete') ?>',
             'type': 'POST',
             'data': {
                 'id': $(e).data('id')
             },
-            'success': function (res) {
+            'success': function(res) {
                 console.log(res)
                 if (res.success == 0) {
                     if (res.error != undefined) alert(res.error)

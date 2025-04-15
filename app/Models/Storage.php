@@ -17,7 +17,7 @@ class Storage extends Model
     }
 
     public function get() {
-        return $this->builder->select('storage.*, l.nama as location, p.nama as product, u.username as created_name')
+        return $this->builder->select('storage.*, l.nama as location, p.nama as product, p.code as product_code, u.username as created_name')
         ->join('location as l', 'l.id = storage.id_location', 'left')
         ->join('product as p', 'p.id = storage.id_product', 'left')
         ->join('users as u', 'u.id = storage.created_by', 'left')
@@ -25,7 +25,7 @@ class Storage extends Model
     }
 
     public function getOne($filter = []) {
-        $x = $this->builder->select('storage.*, l.nama as location, p.nama as product, u.username as created_name')
+        $x = $this->builder->select('storage.*, l.nama as location, p.nama as product, p.code as product_code, u.username as created_name')
         ->join('location as l', 'l.id = storage.id_location', 'left')
         ->join('product as p', 'p.id = storage.id_product', 'left')
         ->join('users as u', 'u.id = storage.created_by', 'left');

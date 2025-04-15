@@ -75,6 +75,7 @@ class StorageController extends BaseController
             $row['id_product'] = encrypted($row['id_product']);
             $res['data'][] = [
                 'no' => "<span>" .$i + 1 . "</span>",
+                'code' => $row['product_code'],
                 'nama' => $row['product'],
                 'qty' => $row['qty'],
                 'createdby' => "
