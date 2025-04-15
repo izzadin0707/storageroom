@@ -22,6 +22,7 @@ function saveHistory($data = [])
     $users = isset($data['users']) ? $data['users'] : null;
     $location = isset($data['location']) ? $data['location'] : null;
     $product = isset($data['product']) ? $data['product'] : null;
+    $cat = isset($data['category']) ? $data['category'] : null;
     $type = isset($data['type']) ? $data['type'] : null;
     $qty = isset($data['qty']) ? $data['qty'] : null;
 
@@ -29,10 +30,10 @@ function saveHistory($data = [])
         if (empty($users)) throw new Exception('users');
         if (empty($location)) throw new Exception('location');
         if (empty($product)) throw new Exception('product');
-        if (empty($type)) throw new Exception('type');
+        if (empty($cat)) throw new Exception('category');
         if (empty($qty)) throw new Exception('qty');
 
-        $cat = $category->getOne(['nama' => $type, 'type_name' => 'Storage']);
+        $cat = $category->getOne(['nama' => $cat, 'type_name' => $type]);
         if (empty($cat)) throw new Exception('category');
 
         $data = [

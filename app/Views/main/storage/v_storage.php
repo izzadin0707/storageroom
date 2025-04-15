@@ -1,7 +1,7 @@
 <?= $this->include('template/v_header') ?>
 
 <!-- STORAGE -->
-<div id="storage-card" class="w-100 bg-white rounded-3 shadow-sm p-2 mb-3">
+<div id="storage-card" class="card-container w-100 bg-white rounded-3 shadow-sm p-2 mb-3">
     <div class="border-bottom d-flex justify-content-between align-items-center pb-2 mb-4">
         <span class="fw-semibold text-secondary">General Information</span>
     </div>
@@ -18,7 +18,7 @@
 </div>
 
 <!-- DATATABLE -->
-<div id="table-card" class="d-none w-100 bg-white rounded-3 shadow-sm p-2">
+<div id="table-card" class="card-container d-none w-100 bg-white rounded-3 shadow-sm p-2">
     <div class="border-bottom d-flex justify-content-between align-items-center pb-2 mb-4">
         <span class="fw-semibold text-secondary detail-title">General Information</span>
         <div class="d-flex flex-nowrap gap-2">
@@ -40,25 +40,24 @@
 </div>
 
 <!-- FORM -->
-<div id="form-card" class="d-none w-100 bg-white rounded-3 shadow-sm p-2 mb-3">
+<div id="form-card" class="card-container d-none w-100 bg-white rounded-3 shadow-sm p-2 mb-3">
     <div class="border-bottom d-flex justify-content-start pb-2 mb-4 fw-semibold text-secondary">
         <span><?= $menu_title ?> Form</span>
     </div>
-    <form>
+    <form id="form-storage">
         <input type="hidden" name="id" value="">
         <input type="hidden" name="location" value="">
         <div class="row">
             <div class="col-6">
                 <div class="mb-2 position-relative">
                     <label for="product" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">Product</label>
-                    <input type="text" class="form-control" style="font-size: .9rem;" id="product-input" placeholder="Select Product" required>
-                    <select class="form-select" style="font-size: .9rem; display: none; position: absolute;" id="product" name="product" aria-label="Default select example"></select>
+                    <select class="form-select" id="product" name="product"></select>
                 </div>
             </div>
             <div class="col-6">
                 <div class="mb-2">
                     <label for="qty" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">Qty</label>
-                    <input type="number" class="form-control" style="font-size: .9rem;" id="qty" name="qty" min="0" value="0" required>
+                    <input type="number" class="form-control" id="qty" name="qty" value="0" required>
                 </div>
             </div>
         </div>
@@ -69,44 +68,41 @@
     </form>
 </div>
 
+<!-- TRANSACTION -->
+<div id="transaction-card" class="card-container d-none w-100 bg-white rounded-3 shadow-sm p-2 mb-3">
+    <div class="border-bottom d-flex justify-content-start pb-2 mb-4 fw-semibold text-secondary">
+        <span class="transaction-title">General Information</span>
+    </div>
+    <form id="form-transaction">
+        <input type="hidden" name="id" value="">
+        <div class="row">
+            <div class="col-6">
+                <div class="mb-2 position-relative">
+                    <label for="type" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">Transaction Type</label>
+                    <select class="form-select" id="type" name="type"></select>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="mb-2">
+                    <label for="qty" class="form-label fw-semibold" style="font-size: .8rem; margin-bottom: 4px;">Qty</label>
+                    <input type="number" class="form-control" id="qty" name="qty" min="0" value="0" required>
+                </div>
+            </div>
+        </div>
+        <div class="border-top d-flex justify-content-end pt-2 mt-4">
+            <button type="button" id="btn-cancel-transaction" class="btn btn-secondary me-2">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </form>
+</div>
+
 <?= $this->include('template/v_footer') ?>
 
 <script>
     $(document).ready(function () {
-        // Product Select
-        $('#product-input').on('keyup', function() {
-            select = $('#product')
-            select.val(null)
-            if ($(this).val() != '') {
-                $.ajax({
-                    'url' : '<?= base_url('/product/select') ?>',
-                    'type': 'POST',
-                    'data': {
-                        search: $(this).val()
-                    },
-                    'success': function (res) {
-                        select.html('')
-                        if (res.data.length != 0) {
-                            $.each(res.data, function (index, row) {
-                                select.append(`<option value="${row.value}">${row.text}</option>`)
-                            })
-                        } else {
-                            select.append(`<option selected disabled>No Result</option>`)
-                        }
-                        select.append(`<option disabled></option>`)
-                        select.show()
-                        select[0].size= select.find('option').length > 5 ? 5 : select.find('option').length;
-                    }
-                })
-            } else {
-                select.html('')
-                select.hide()
-            }
-        })
-
-        $('#product').on('click', function () {
-            $('#product-input').val($(this).find(":selected").text())
-            $(this).hide()
+        generateSelect2('#product', '<?= base_url('/product/select') ?>', 'Select Product', true)
+        generateSelect2('#type', '<?= base_url('/category/select') ?>', 'Select Transaction', true, {
+            type: 'transaction'
         })
 
         $('#example').DataTable( {
@@ -120,36 +116,42 @@
             columns: [
                 {data: 'no', width: '10%', className: 'text-center'},
                 {data: 'nama'},
-                {data: 'qty', width: '20%', className: 'text-start'},
+                {data: 'qty', width: '20%', className: 'text-end'},
                 {data: 'action', width: '10%'},
             ]
         } );
-        // Product Select
 
         $('#btn-create').on('click', function () {
-            $('#form-card').removeClass('d-none')
-            $('#table-card').addClass('d-none')
+            showCard('form-card')
             $('input[name="id"]').val(null)
         })
         
         $('#btn-cancel').on('click', function () {
-            $('#form-card').addClass('d-none')
-            $('#table-card').removeClass('d-none')
+            showCard('table-card')
             $('input[name="id"]').val(null)
-            $('select[name="product"]').hide()
+            $('select[name="product"]').html(null).trigger('change')
             if ($('#form-card').hasClass('d-none')) {
                 $('#form-card').find('form').trigger('reset')
             }
         })
 
+        $('#btn-cancel-transaction').on('click', function () {
+            showCard('table-card')
+            $('input[name="id"]').val(null)
+            $('select[name="qty"]').val(null)
+            $('select[name="type"]').html(null).trigger('change')
+            if ($('#transaction-card').hasClass('d-none')) {
+                $('#transaction-card').find('form').trigger('reset')
+            }
+        })
+
         $('#btn-detail-back').on('click', function () {
-            $('#table-card').addClass('d-none')
-            $('#storage-card').removeClass('d-none')
+            showCard('storage-card')
             $('#form-card input[name="location"]').val(null)
             $('#detail-table').DataTable().destroy()
         })
 
-        $('form').submit(function (e) {
+        $('#form-storage').submit(function (e) {
             e.preventDefault();
             $('input').prop('readonly')
 
@@ -170,11 +172,32 @@
                 }
             })
         })
+
+        $('#form-transaction').submit(function (e) {
+            e.preventDefault();
+            $('input').prop('readonly')
+
+            $.ajax({
+                'url': '<?= base_url('storage/transaction')?>',
+                'type': 'POST',
+                'data': $(this).serialize(),
+                'success': function (res) {
+                    if (res.success == 0) {
+                        if (res.error != undefined) {
+                            $(`input[name="${res.error}"]`).focus()
+                            $(`select[name="${res.error}"]`).focus()
+                        }
+                    } else if (res.success == 1) {
+                        $('#detail-table').DataTable().ajax.reload(null, true);
+                        $('#btn-cancel-transaction').trigger('click')
+                    }
+                }
+            })
+        })
     })
 
     function detail(e) {
-        $('#table-card').removeClass('d-none')
-        $('#storage-card').addClass('d-none')
+        showCard('table-card')
         $('.detail-title').text(`${$(e).data('location')} - General Information`)
         $('#form-card input[name="location"]').val($(e).data('id'))
         $('#detail-table').DataTable( {
@@ -191,45 +214,20 @@
             columns: [
                 {data: 'no', width: '10%', className: 'text-center align-middle'},
                 {data: 'nama', className: 'align-middle'},
-                {data: 'qty', width: '10%', className: 'text-start align-middle'},
+                {data: 'qty', width: '10%', className: 'text-end align-middle'},
                 {data: 'createdby', width: '15%'},
                 {data: 'action', width: '10%'},
             ]
         } );
     }
 
-    // function edit(e) {
-    //     row = $(e).data('row')
-    //     $('#form-card').removeClass('d-none')
-    //     $('#table-card').addClass('d-none')
-    //     $('input[name="id"]').val(row.id)
-    //     $('#product-input').val(row.product)
-    //     $('input[name="qty"]').val(row.qty)
-    //     $.ajax({
-    //         'url' : '<?= base_url('/product/select') ?>',
-    //         'type': 'POST',
-    //         'data': {
-    //             search: row.product
-    //         },
-    //         'success': function (res) {
-    //             $('#product').html('')
-    //             if (res.data.length != 0) {
-    //                 $.each(res.data, function (index, row) {
-    //                     $('#product').append(`<option value="${row.value}">${row.text}</option>`)
-    //                 })
-    //             } else {
-    //                 $('#product').append(`<option selected disabled>No Result</option>`)
-    //             }
-    //             $('#product').append(`<option disabled></option>`)
-    //             select[0].size= select.find('option').length > 5 ? 5 : select.find('option').length;
-
-    //             $('select[name="product"] option').prop('selected', false)
-    //             $('select[name="product"] option').prop('selected', false).filter(function() {
-    //                 return $(this).text() === row.product;
-    //             }).prop('selected', true);
-    //         }
-    //     })
-    // }
+    function edit(e) {
+        row = $(e).data('row')
+        showCard('form-card')
+        $('input[name="id"]').val(row.id)
+        $('input[name="qty"]').val(row.qty)
+        $('select[name="product"]').append('<option value="' + row.id_product + '" selected>' + row.product + '</option>')
+    }
 
     function deleted(e) {
         $.ajax({
@@ -245,6 +243,22 @@
                 } else if (res.success == 1) {
                     $('#detail-table').DataTable().ajax.reload(null, false);
                 }
+            }
+        })
+    }
+
+    function transaction(e) {
+        showCard('transaction-card')
+        $('.transaction-title').text(`${$(e).data('product')} - QTY: ${$(e).data('qty')}`)
+        $('#transaction-card input[name="id"]').val($(e).data('id'))
+    }
+
+    function showCard(id) {
+        $('.card-container').each(function (e) {
+            if ($(this).attr('id') == id) {
+                $(this).removeClass('d-none')
+            } else {
+                $(this).addClass('d-none')
             }
         })
     }

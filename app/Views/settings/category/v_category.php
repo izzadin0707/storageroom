@@ -50,7 +50,7 @@
 
 <script>
     $(document).ready(function () {
-        generateSelect('#type', '<?= base_url('/type/select') ?>', 'Select Role', true)
+        generateSelect2('#type', '<?= base_url('/type/select') ?>', 'Select Role', true)
 
         $('#example').DataTable( {
             ajax: {
@@ -107,11 +107,12 @@
 
     function edit(e) {
         row = $(e).data('row')
+        console.log(row)
         $('#form-card').removeClass('d-none')
         $('#table-card').addClass('d-none')
         $('input[name="id"]').val(row.id)
         $('input[name="nama"]').val(row.nama)
-        $('input[name="nama_type"]').val(row.nama_type)
+        $('select[name="type"]').append('<option value="' + row.id_type + '" selected>' + row.type_name + '</option>')
     }
 
     function deleted(e) {

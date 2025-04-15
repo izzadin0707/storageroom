@@ -39,6 +39,7 @@ class CategoryController extends BaseController
         for ($i = 0; $i < count($data); $i++) {
             $row = $data[$i];
             $row['id'] = encrypted($row['id']);
+            $row['id_type'] = encrypted($row['id_type']);
             $res['data'][] = [
                 'no' => "<span>" . $i + 1 . "</span>",
                 'nama' => $row['nama'],

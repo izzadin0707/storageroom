@@ -3,6 +3,7 @@
 namespace App\Controllers\Main;
 
 use App\Controllers\BaseController;
+use App\Models\Category;
 use App\Models\Location;
 use App\Models\Storage;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -11,6 +12,7 @@ use Exception;
 /**
  * @property Storage storage
  * @property Location location
+ * @property Category category
  * @property session session
  */
 
@@ -21,6 +23,7 @@ class StorageController extends BaseController
         $this->session = session();
         $this->storage = new Storage();
         $this->location = new Location();
+        $this->category = new Category();
 
         $this->session->set('menu', 'storage');
     }
@@ -69,6 +72,7 @@ class StorageController extends BaseController
         for ($i=0; $i < count($data) ; $i++) {
             $row = $data[$i];
             $row['id'] = encrypted($row['id']);
+            $row['id_product'] = encrypted($row['id_product']);
             $res['data'][] = [
                 'no' => "<span>" .$i + 1 . "</span>",
                 'nama' => $row['product'],
@@ -79,6 +83,8 @@ class StorageController extends BaseController
                 ",
                 'action' => "
                 <div class='d-flex flex-nowrap justify-content-center gap-1'>
+                    <button class='btn btn-success btn-action text-white' data-id='". $row['id'] ."' data-product='". $row['product'] ."' data-qty='". $row['qty'] ."' onclick='transaction(this)'><i class='bx bx-transfer'></i></button>
+                    <button class='btn-edit btn btn-warning btn-action text-white' data-row='". json_encode($row) ."' onclick='edit(this)'><i class='bx bx-edit'></i></button>
                     <button class='btn btn-danger btn-action text-white' data-id='". $row['id'] ." 'onclick='deleted(this)'><i class='bx bx-trash'></i></button>
                 </div>"
             ];
@@ -104,27 +110,89 @@ class StorageController extends BaseController
                 'qty' => $qty,
             ];
 
+            $category = null;
+
             if (empty($id)) {
                 $data['id_location'] = decrypted($location);
                 $data['created_by'] = $this->session->user;
                 $data['created_at'] = date('Y-m-d H:i:s');
                 $this->storage->store($data);
+                $category = 'INITIAL';
             } else {
                 $data['updated_by'] = $this->session->user;
                 $data['updated_at'] = date('Y-m-d H:i:s');
                 $this->storage->update(decrypted($id), $data);
-
+                $category = 'UPDATE';
+                
             }
 
             saveHistory([
                 'users' => $this->session->user,
                 'location' => decrypted($location),
                 'product' => decrypted($product),
-                'type' => 'IN',
+                'category' => $category,
+                'type' => 'Storage',
                 'qty' =>  $qty
             ]);
 
             $res['success'] = 1;
+        } catch (Exception $e) {
+            $res = [
+                'success' => 0,
+                'error' => $e->getMessage()
+            ];
+        }
+
+        return $this->response->setJSON($res);
+    }
+
+    public function transaction() {
+        $res = [];
+        $id = $this->request->getPost('id');
+        $type = $this->request->getPost('type');
+        $qty = $this->request->getPost('qty');
+
+        try {
+            if (empty($type)) throw new Exception('type');
+            if (empty($qty)) throw new Exception('qty');
+
+            $storage = $this->storage->getOne(['id' => decrypted($id)]) ?? [];
+
+            if (!empty($storage)) {
+
+                $data = [
+                    'qty' => $qty,
+                ];
+    
+                $category = $this->category->getOne(['id' => decrypted($type)])['nama'] ?? 'IN';
+    
+                if ($category == 'IN') {
+                    $data['qty'] = $storage['qty'] + $qty;
+                } else if ($category == 'OUT' && $storage['qty'] >= $qty) {
+                    $data['qty'] = $storage['qty'] - $qty;
+                } else {
+                    throw new Exception('less');
+                }
+
+                $data['updated_by'] = $this->session->user;
+                $data['updated_at'] = date('Y-m-d H:i:s');
+                $this->storage->update(decrypted($id), $data);
+    
+                saveHistory([
+                    'users' => $this->session->user,
+                    'location' => $storage['id_location'],
+                    'product' => $storage['id_product'],
+                    'category' => $category,
+                    'type' => 'Transaction',
+                    'qty' =>  $qty
+                ]);
+    
+    
+                $res['success'] = 1;
+            } else {
+                $res['success'] = 0;
+                $res['error'] = 'Storage not found!';
+            }
         } catch (Exception $e) {
             $res = [
                 'success' => 0,
@@ -144,14 +212,6 @@ class StorageController extends BaseController
             if (empty($id)) throw new Exception('Id Required!');
 
             $stg = $this->storage->getOne(['id' => decrypted($id)]);
-
-            saveHistory([
-                'users' => $this->session->user,
-                'location' => $stg['id_location'],
-                'product' => $stg['id_product'],
-                'type' => 'OUT',
-                'qty' =>  $stg['qty']
-            ]);
 
             $this->storage->remove(decrypted($id));
 

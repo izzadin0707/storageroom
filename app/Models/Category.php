@@ -9,7 +9,7 @@ class Category extends Model
     protected $db;
     protected $table = "category";
     protected $primaryKey = 'id';
-    protected $allowedFields = ['nama', 'nama_type'];
+    protected $allowedFields = ['nama', 'id_type'];
 
     public function __construct() {
         $this->db = db_connect();
@@ -40,7 +40,7 @@ class Category extends Model
         ->join('type as t', 't.id = category.id_type', 'left');
         
         if (isset($filter['id'])) {
-            return $x->where('id', $filter['id'])->get()->getRowArray();
+            return $x->where('category.id', $filter['id'])->get()->getRowArray();
         }
 
         foreach ($filter as $key => $value) {

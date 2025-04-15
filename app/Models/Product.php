@@ -34,7 +34,7 @@ class Product extends Model
 
         foreach ($filter as $key => $value) {
             if ($key == 'search') {
-                $x->where('LOWER(product.nama) LIKE', '%'.strtolower($value).'%');
+                $x->where('LOWER(product.code) LIKE', '%'.strtolower($value).'%')->orWhere('LOWER(product.nama) LIKE', '%'.strtolower($value).'%');
                 continue;
             }
             $x->where($key, $value);

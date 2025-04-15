@@ -2,6 +2,7 @@
 
 namespace Config;
 
+use App\Filters\IsAdmin;
 use App\Filters\IsNotAuth;
 use App\Filters\IsAuth;
 use CodeIgniter\Config\Filters as BaseFilters;
@@ -38,6 +39,7 @@ class Filters extends BaseFilters
         'performance'   => PerformanceMetrics::class,
         'auth'          => IsAuth::class,
         'noauth'          => IsNotAuth::class,
+        'admin'          => IsAdmin::class,
     ];
 
     /**

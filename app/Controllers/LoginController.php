@@ -39,6 +39,7 @@ class LoginController extends BaseController
                 $this->session->set([
                     'user' => $user['id'],
                     'username' => $user['username'],
+                    'role' => $user['rolename'],
                 ]);
                 $res['success'] = 1;
             } else {

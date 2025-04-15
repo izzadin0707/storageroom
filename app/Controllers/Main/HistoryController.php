@@ -44,18 +44,45 @@ class HistoryController extends BaseController
         for ($i=0; $i < count($data) ; $i++) {
             $row = $data[$i];
             $row['id'] = encrypted($row['id']);
-            $color = strtolower($row['type']) == 'in' ? 'black' : 'red';
-            $min = strtolower($row['type']) == 'out' ? '-' : '';
+            $color = strtolower($row['type']) == 'out' ? 'red' : 'black';
+            $qty = strtolower($row['type']) == 'out' ? "(" . $row['qty'] . ")" : $row['qty'];
             $res['data'][] = [
                 'no' => "<span>" .$i + 1 . "</span>",
                 'product' => $row['product'],
                 'location' => $row['location'],
                 'type' => $row['type'],
-                'qty' => "<span style='color: $color;'>$min" . $row['qty'] . "</span>",
+                'qty' => "<span style='color: $color;'>" . $qty . "</span>",
                 'createdby' => "
                     <span class='fw-semibold' style='color: #676df0;'>" . $row['created_name'] ."</span><br>
                     <span>" . date('d F Y', strtotime($row['created_at'])) . "</span>
-                "
+                ",
+                'action' => "
+                <div class='d-flex flex-nowrap justify-content-center gap-1'>
+                    <button class='btn btn-danger btn-action text-white' data-id='". $row['id'] ." 'onclick='deleted(this)'><i class='bx bx-trash'></i></button>
+                </div>"
+            ];
+        }
+
+        return $this->response->setJSON($res);
+    }
+
+    public function delete()
+    {
+        $res = [];
+        $id = $this->request->getPost('id');
+
+        try {
+            if (empty($id)) throw new Exception('Id Required!');
+
+            $stg = $this->history->getOne(['history.id' => decrypted($id)]);
+
+            $this->history->remove(decrypted($id));
+
+            $res['success'] = 1;
+        } catch (Exception $e) {
+            $res = [
+                'success' => 0,
+                'error' => $e->getMessage()
             ];
         }
 

@@ -19,10 +19,6 @@
                     <i class="bx bxs-package fs-5 me-2"></i>
                     <span>Product</span>
                 </div>
-                <div onclick="<?= !empty($_SESSION['menu']) && $_SESSION['menu'] == 'transaction' ? '' : "window.location.href = '". base_url('/transaction') ."'" ?>" class="menu <?= !empty($_SESSION['menu']) && $_SESSION['menu'] == 'transaction' ? 'menu-active' : '' ?> my-2 p-2 rounded-3 text-secondary fw-semibold d-flex align-items-center" style="cursor: pointer;">
-                    <i class="bx bx-transfer fs-5 me-2"></i>
-                    <span>Transaction</span>
-                </div>
                 <div onclick="<?= !empty($_SESSION['menu']) && $_SESSION['menu'] == 'storage' ? '' : "window.location.href = '". base_url('/storage') ."'" ?>" class="menu <?= !empty($_SESSION['menu']) && $_SESSION['menu'] == 'storage' ? 'menu-active' : '' ?> my-2 p-2 rounded-3 text-secondary fw-semibold d-flex align-items-center" style="cursor: pointer;">
                     <i class="bx bxs-layer fs-5 me-2"></i>
                     <span>Storage</span>
@@ -35,6 +31,7 @@
                     <i class="bx bxs-report fs-5 me-2"></i>
                     <span>History</span>
                 </div>
+                <?php if (strtolower($_SESSION['role']) == 'admin') :?>
                 <!-- Menu Group -->
                 <div class="px-1 mt-3 rounded-3 text-secondary menu-group" style="cursor: default; font-size: .9rem;">
                     <span>Settings</span>
@@ -56,6 +53,7 @@
                     <i class="bx bx-copy fs-5 me-2"></i>
                     <span>Type</span>
                 </div>
+                <?php endif ?>
             </div>
         </div>
         <div id="copyright" class="d-flex justify-content-center w-100 mt-5 mb-3" style="text-wrap: nowrap;">

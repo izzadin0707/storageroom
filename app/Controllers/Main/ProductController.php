@@ -70,7 +70,7 @@ class ProductController extends BaseController
             foreach ($data as $row) {
                 $res['data'][] = [
                     'value' => encrypted($row['id']),
-                    'text' => $row['nama'],
+                    'text' => $row['code'] . ' - ' . $row['nama'],
                 ];
             }
         }

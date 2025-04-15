@@ -53,4 +53,22 @@ class Storage extends Model
     public function remove($id) {
         return $this->builder->delete(['id' => $id]);
     }
+
+    public function getDashboardTable() {
+        return $this->db->table('product as b')
+            ->select('
+                b.code,
+                b.nama as product_name,
+                b.description,
+                c.nama as category_name,
+                GROUP_CONCAT(DISTINCT d.nama ORDER BY d.nama SEPARATOR \', \') as location_names,
+                SUM(COALESCE(a.qty, 0)) as total_qty
+            ')
+            ->join('storage as a', 'b.id = a.id_product', 'left')
+            ->join('category as c', 'c.id = b.id_uom', 'left')
+            ->join('location as d', 'd.id = a.id_location', 'left')
+            ->groupBy(['b.code', 'b.nama', 'b.description', 'c.nama'])
+            ->get()
+            ->getResultArray();
+    }
 }
